@@ -8,6 +8,8 @@ node package starter template
 -   typescript
 -   jest (ts)
 
+-   prettier/eslint (ts) - husky/lint-staged
+
 -   nodemon/sucrase for faster development testing
 
 ## commands:

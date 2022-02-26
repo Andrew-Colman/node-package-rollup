@@ -36,6 +36,8 @@
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-node-resolve": "^13.0.4",
         "@rollup/plugin-typescript": "^8.2.5",
+        "@swc/core": "^1.2.145",
+        "@swc/jest": "^0.2.20",
         "@types/jest": "^27.0.1",
         "@types/node": "^16.11.2",
         "@typescript-eslint/eslint-plugin": "^5.12.1",

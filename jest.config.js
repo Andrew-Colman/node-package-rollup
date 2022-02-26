@@ -13,4 +13,7 @@ module.exports = {
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/',
     }),
+    transform: {
+        '^.+\\.(t|j)sx?$': '@swc/jest',
+    },
 };

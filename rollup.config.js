@@ -5,22 +5,49 @@ import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 
-export default {
-    input: 'src/index.ts',
-    output: {
-        file: 'dist/index.js',
-        format: 'commonjs',
-    },
+import dts from 'rollup-plugin-dts';
+import del from 'rollup-plugin-delete';
+
+const plugins = [
+    shebang(), // <- if usage for cli (bin)
+    typescript({ tsconfig: './tsconfig.json' }),
+    commonjs(),
+    nodeResolve(),
+    terser({
+        output: {
+            comments: false,
+        },
+    }),
+    del({
+        targets: 'dist/*',
+    }),
+];
+
+const external = ['/node_modules/']; // external packages
+
+const emitTypes = {
+    // emitting types (bundled)
+    input: './dist/.declaration/src/index.d.ts',
+    output: [{ file: './dist/index.d.ts', format: 'es' }],
     plugins: [
-        shebang(), // <- if usage for cli (bin)
-        typescript(),
-        commonjs(),
-        nodeResolve(),
-        terser({
-            output: {
-                comments: false,
-            },
+        dts(),
+        del({
+            targets: 'dist/.declaration',
+            hook: 'buildEnd',
         }),
     ],
-    external: [], //external packages
 };
+
+export default [
+    {
+        input: 'src/index.ts',
+        output: {
+            file: 'dist/index.js',
+            format: 'commonjs',
+        },
+        plugins,
+        external,
+    },
+    /* {... more inputs / outputs} */
+    emitTypes,
+];

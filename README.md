@@ -5,12 +5,20 @@ node package starter template
 ## features:
 
 -   rollup
--   typescript
+
+-   typescript powered
+
 -   jest (ts)
 
 -   prettier/eslint (ts) - husky/lint-staged
 
 -   nodemon/sucrase for faster development testing
+
+-   automatic type declaration `.d.ts`
+
+-   automatic code minify (with terser)
+
+-   yarn/berry support
 
 ## commands:
 

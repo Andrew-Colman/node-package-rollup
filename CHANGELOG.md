@@ -1,3 +1,9 @@
+# 0.3.0
+
+change minify strategy
+
+> use terser cli
+
 # 0.2.0
 
 add more config files/packages

@@ -7,27 +7,38 @@ import dts from 'rollup-plugin-dts';
 import del from 'rollup-plugin-delete';
 import command from 'rollup-plugin-command';
 
+const inputDir = './src';
+const outputDir = './dist';
+const declarationDir = `${outputDir}/_declaration`;
+
 const plugins = [
     shebang(), // <- if usage for cli (bin)
+    command(
+        `yarn tsc --emitDeclarationOnly --declaration --declarationDir ${declarationDir}`,
+        { wait: true, once: true } // emitting types
+    ),
     typescript({ tsconfig: './tsconfig.json' }),
     commonjs(),
     nodeResolve(),
     command('yarn minify'), // <- if you want to minify code (with terser)
     del({
-        targets: 'dist/*',
+        targets: outputDir,
     }),
 ];
 
-const external = ['/node_modules/']; // external packages
+const external = [
+    '/node_modules/',
+    ...Object.keys(require('./package.json').dependencies),
+]; // external packages
 
 const emitTypes = {
     // emitting types (bundled)
-    input: './dist/.declaration/src/index.d.ts',
-    output: [{ file: './dist/index.d.ts', format: 'es' }],
+    input: `${declarationDir}/index.d.ts`,
+    output: [{ file: `${outputDir}/index.d.ts`, format: 'es' }],
     plugins: [
         dts(),
         del({
-            targets: 'dist/.declaration',
+            targets: `${declarationDir}`,
             hook: 'buildEnd',
         }),
     ],
@@ -35,9 +46,9 @@ const emitTypes = {
 
 export default [
     {
-        input: 'src/index.ts',
+        input: `${inputDir}/index.ts`,
         output: {
-            file: 'dist/index.js',
+            file: `${outputDir}/index.js`,
             format: 'commonjs',
         },
         plugins,

@@ -48,7 +48,6 @@
         "eslint-config-prettier": "^8.4.0",
         "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-promise": "^6.0.1",
         "husky": "^8.0.1",
@@ -68,6 +67,7 @@
         "typescript": "^4.8.3"
     },
     "dependencies": {
+        "eslint-plugin-n": "^15.3.0",
         "jsonc-require": "^1.0.1",
         "nanov": "^1.0.2"
     },
